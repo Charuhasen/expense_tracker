@@ -15,7 +15,8 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   //Text Controllers
   final newExpenseNameController = TextEditingController();
-  final newExpenseAmountController = TextEditingController();
+  final newExpenseDollarAmountController = TextEditingController();
+  final newExpenseCentsAmountController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -24,11 +25,15 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: Colors.grey[300],
         floatingActionButton: FloatingActionButton(
           onPressed: addNewExpense,
+          backgroundColor: Colors.black,
           child: const Icon(Icons.add),
         ),
         body: ListView(
           children: [
             ExpenseSummary(startOfWeek: value.startOfTheWeek()),
+            const SizedBox(
+              height: 30,
+            ),
             ListView.builder(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
@@ -55,10 +60,26 @@ class _HomePageState extends State<HomePage> {
                   //Expense name
                   TextField(
                     controller: newExpenseNameController,
+                    decoration: const InputDecoration(hintText: "Expense Name"),
                   ),
                   //Expense amount
-                  TextField(
-                    controller: newExpenseAmountController,
+                  Row(
+                    children: [
+                      Expanded(
+                        child: TextField(
+                          controller: newExpenseDollarAmountController,
+                          keyboardType: TextInputType.number,
+                          decoration: const InputDecoration(hintText: "Dollars"),
+                        ),
+                      ),
+                      Expanded(
+                        child: TextField(
+                          controller: newExpenseCentsAmountController,
+                          keyboardType: TextInputType.number,
+                          decoration: const InputDecoration(hintText: "Cents"),
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
@@ -78,10 +99,13 @@ class _HomePageState extends State<HomePage> {
   }
 
   void save() {
+    //Put the Dollar and Cents amount together
+    String amount =
+        "${newExpenseDollarAmountController.text}.${newExpenseCentsAmountController.text}";
     //Add expense item
     ExpenseItem expenseItem = ExpenseItem(
       name: newExpenseNameController.text,
-      amount: newExpenseAmountController.text,
+      amount: amount,
       dateTime: DateTime.now(),
     );
 
@@ -97,6 +121,7 @@ class _HomePageState extends State<HomePage> {
 
   void clearController() {
     newExpenseNameController.clear();
-    newExpenseAmountController.clear();
+    newExpenseDollarAmountController.clear();
+    newExpenseCentsAmountController.clear();
   }
 }
