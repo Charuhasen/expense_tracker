@@ -46,12 +46,12 @@ class _HomePageState extends State<HomePage> {
               physics: const NeverScrollableScrollPhysics(),
               itemCount: value.getAllExpenseList().length,
               itemBuilder: (context, index) => ExpenseTile(
-                  name: value.getAllExpenseList()[index].name,
-                  amount: value.getAllExpenseList()[index].amount,
-                  dateTime: value.getAllExpenseList()[index].dateTime,
-                  deleteTapped: ((p0) => deleteExpense(value.getAllExpenseList()[index])),
-                  ),
-
+                name: value.getAllExpenseList()[index].name,
+                amount: value.getAllExpenseList()[index].amount,
+                dateTime: value.getAllExpenseList()[index].dateTime,
+                deleteTapped: ((p0) =>
+                    deleteExpense(value.getAllExpenseList()[index])),
+              ),
             ),
           ],
         ),
@@ -115,17 +115,23 @@ class _HomePageState extends State<HomePage> {
   }
 
   void save() {
-    //Put the Dollar and Cents amount together
-    String amount =
-        "${newExpenseDollarAmountController.text}.${newExpenseCentsAmountController.text}";
-    //Add expense item
-    ExpenseItem expenseItem = ExpenseItem(
-      name: newExpenseNameController.text,
-      amount: amount,
-      dateTime: DateTime.now(),
-    );
+    if (newExpenseNameController.text.isNotEmpty &&
+        newExpenseDollarAmountController.text.isNotEmpty &&
+        newExpenseCentsAmountController.text.isNotEmpty) {
+      //Put the Dollar and Cents amount together
+      String amount =
+          "${newExpenseDollarAmountController.text}.${newExpenseCentsAmountController.text}";
+      //Add expense item
+      ExpenseItem expenseItem = ExpenseItem(
+        name: newExpenseNameController.text,
+        amount: amount,
+        dateTime: DateTime.now(),
+      );
 
-    Provider.of<ExpenseData>(context, listen: false).addNewExpense(expenseItem);
+      Provider.of<ExpenseData>(context, listen: false)
+          .addNewExpense(expenseItem);
+    }
+
     Navigator.pop(context);
     clearController();
   }
