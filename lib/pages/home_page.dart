@@ -48,7 +48,10 @@ class _HomePageState extends State<HomePage> {
               itemBuilder: (context, index) => ExpenseTile(
                   name: value.getAllExpenseList()[index].name,
                   amount: value.getAllExpenseList()[index].amount,
-                  dateTime: value.getAllExpenseList()[index].dateTime),
+                  dateTime: value.getAllExpenseList()[index].dateTime,
+                  deleteTapped: ((p0) => deleteExpense(value.getAllExpenseList()[index])),
+                  ),
+
             ),
           ],
         ),
@@ -104,6 +107,11 @@ class _HomePageState extends State<HomePage> {
                 ),
               ],
             ));
+  }
+
+  //Delete an expense
+  void deleteExpense(ExpenseItem expense) {
+    Provider.of<ExpenseData>(context, listen: false).deleteExpense(expense);
   }
 
   void save() {
