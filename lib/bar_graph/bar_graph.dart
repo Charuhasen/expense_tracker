@@ -62,7 +62,8 @@ class MyBarGraph extends StatelessWidget {
                 borderRadius: BorderRadius.circular(4),
                 backDrawRodData: BackgroundBarChartRodData(
                   show: true,
-                  color: Colors.red,
+                  toY: maxY,
+                  color: Colors.grey[100],
                 ),
               ),
             ]),

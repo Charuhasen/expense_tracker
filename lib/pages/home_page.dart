@@ -19,6 +19,13 @@ class _HomePageState extends State<HomePage> {
   final newExpenseCentsAmountController = TextEditingController();
 
   @override
+  void initState() {
+    super.initState();
+    //Prepare the data
+    Provider.of<ExpenseData>(context, listen: false).prepareData();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Consumer<ExpenseData>(
       builder: (context, value, child) => Scaffold(
@@ -69,7 +76,8 @@ class _HomePageState extends State<HomePage> {
                         child: TextField(
                           controller: newExpenseDollarAmountController,
                           keyboardType: TextInputType.number,
-                          decoration: const InputDecoration(hintText: "Dollars"),
+                          decoration:
+                              const InputDecoration(hintText: "Dollars"),
                         ),
                       ),
                       Expanded(

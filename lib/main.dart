@@ -2,8 +2,13 @@ import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 import 'data/expense_data.dart';
 import 'pages/home_page.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
-void main() {
+void main() async {
+  //Initialize hive
+  await Hive.initFlutter();
+  //Open Hive DB
+  await Hive.openBox("expense_database");
   runApp(
     MultiProvider(
       providers: [
