@@ -1,18 +1,25 @@
+import 'package:expense_tracker/datetime/date_time_helper.dart';
 import 'package:flutter/material.dart';
 
 class ExpenseTile extends StatelessWidget {
   final String name;
   final String amount;
-  final String dateTime;
+  final DateTime dateTime;
 
-  const ExpenseTile({super.key, required this.name, required this.amount, required this.dateTime});
+  const ExpenseTile(
+      {super.key,
+      required this.name,
+      required this.amount,
+      required this.dateTime});
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
       title: Text(name),
-      subtitle: Text(amount),
-      trailing: Text(dateTime),
+      subtitle: Text(
+        '${dateTime.day}/${dateTime.month}/${dateTime.year}',
+      ),
+      trailing: Text('\$$amount'),
     );
   }
 }
